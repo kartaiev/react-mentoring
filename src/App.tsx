@@ -1,15 +1,15 @@
 import React, { FC } from 'react';
-import tw from 'twin.macro';
-import Face from './assets/images/nose.jpg';
+import Layout from './components/layout/Layout';
+import Header from './components/header/Header';
+import Content from './components/content/Content';
 
 const App: FC = () => (
-  <Container>
-    <Title>This is:</Title>
-    <img src={Face} alt="me" />
-  </Container>
+  <>
+    <Header />
+    <Layout>
+      <Content />
+    </Layout>
+  </>
 );
 
 export default App;
-
-const Title = tw.h1`text-5xl text-gray-700 p-6`;
-const Container = tw.div`flex flex-col items-center`;
