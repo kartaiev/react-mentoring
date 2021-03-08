@@ -1,17 +1,18 @@
-import React, { FC } from 'react';
+import React, { FC, ReactNode } from 'react';
 import tw from 'twin.macro';
-import Top from './Top';
-import Search from './Search';
 import img from '../../assets/images/header-image.jpg';
 
-const Header: FC = () => (
+type Props = {
+  children: ReactNode;
+};
+
+const Header: FC<Props> = ({ children }: Props) => (
   <HeaderContainer
     style={{
       backgroundImage: `url(${img})`
     }}
   >
-    <Top />
-    <Search />
+    {children}
   </HeaderContainer>
 );
 
