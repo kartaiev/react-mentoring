@@ -1,5 +1,7 @@
 import React, { FC } from 'react';
+import { AspectRatio } from '@chakra-ui/react';
 import tw from 'twin.macro';
+import { DotsButton } from '../../elements';
 
 type Props = {
   Poster: string;
@@ -11,17 +13,22 @@ type Props = {
 const MovieCard: FC<Props> = ({ Poster, Title, Year, Type }: Props) => {
   return (
     <CardContainer>
-      <img src={Poster} alt={Title} />
+      <AspectRatio ratio={2 / 3}>
+        <img src={Poster} alt={Title} />
+      </AspectRatio>
+      <DotsButton />
       <TitleYear>
-        <span>{Title}</span>
+        <TitleSpan>{Title}</TitleSpan>
         <span>{Year}</span>
       </TitleYear>
-      <p>{Type}</p>
+      <TypeParagraph>{Type}</TypeParagraph>
     </CardContainer>
   );
 };
 
 export default MovieCard;
 
-const CardContainer = tw.div`flex flex-col justify-between items-start inline`;
-const TitleYear = tw.div`flex justify-between w-48`;
+const CardContainer = tw.div`flex flex-col justify-between items-start inline cursor-pointer transition-all relative`;
+const TitleYear = tw.div`flex justify-between w-full py-4 text-gray-400`;
+const TitleSpan = tw.span`text-xl`;
+const TypeParagraph = tw.p`text-gray-500 text-lg`;

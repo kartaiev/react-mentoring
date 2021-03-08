@@ -1,12 +1,16 @@
 import React, { FC } from 'react';
+import { SimpleGrid } from '@chakra-ui/react';
 import { MoviesType } from '../../lib';
 import MovieCard from './MovieCard';
-import tw from 'twin.macro';
 
-const Movies: FC<MoviesType[]> = ({ allMovies }: MoviesType[]) => {
+type Props = {
+  allMovies: MoviesType[];
+};
+
+const Movies: FC<Props> = ({ allMovies }: Props) => {
   const allMoviesList =
-    allMovies &&
-    allMovies.map(({ Poster, Title, Year, Type, imdbID }: any) => (
+    !!allMovies &&
+    allMovies.map(({ Poster, Title, Year, Type, imdbID }) => (
       <MovieCard
         key={imdbID}
         Poster={Poster}
@@ -16,9 +20,11 @@ const Movies: FC<MoviesType[]> = ({ allMovies }: MoviesType[]) => {
       />
     ));
 
-  return <AllMoviesContainer>{allMoviesList}</AllMoviesContainer>;
+  return (
+    <SimpleGrid columns={[1, 1, 2, 3]} spacingX={48} spacingY={16} pb={6}>
+      {allMoviesList}
+    </SimpleGrid>
+  );
 };
 
 export default Movies;
-
-const AllMoviesContainer = tw.div`w-full grid grid-cols-3 grid-rows-3`;
