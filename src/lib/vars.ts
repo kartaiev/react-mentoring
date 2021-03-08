@@ -3,7 +3,9 @@ export const GLOBAL = {
   SEARCH_TITLE: 'FIND YOUR MOVIE',
   SORT_BY: 'SORT BY',
   SEARCH: 'SEARCH',
-  MOVIES_FOUND: 'movies found'
+  MOVIES_FOUND: 'movies found',
+  EDIT: 'Edit',
+  DELETE: 'Delete'
 };
 
 export const MENU_LEFT = ['ALL', 'DOCUMENTARY', 'COMEDY', 'HORROR', 'CRIME'];

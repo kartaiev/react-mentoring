@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { AspectRatio } from '@chakra-ui/react';
 import tw from 'twin.macro';
-import { DotsButton } from '../../elements';
+import DottedButtonModal from './DottedButtonModal';
 
 type Props = {
   Poster: string;
@@ -16,7 +16,7 @@ const MovieCard: FC<Props> = ({ Poster, Title, Year, Type }: Props) => {
       <AspectRatio ratio={2 / 3}>
         <img src={Poster} alt={Title} />
       </AspectRatio>
-      <DotsButton />
+      <DottedButtonModal />
       <TitleYear>
         <TitleSpan>{Title}</TitleSpan>
         <span>{Year}</span>

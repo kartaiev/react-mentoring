@@ -2,10 +2,13 @@ import React, { FC } from 'react';
 import tw from 'twin.macro';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
 import { motion } from 'framer-motion';
+import { PopoverTrigger } from '@chakra-ui/react';
 
 const Button = tw.button`px-12 bg-bgColorAlt bg-opacity-70 text-danger font-logoAlt rounded font-bold text-2xl`;
 
 const DangerButton = tw(Button)`px-24 bg-danger text-gray-50 h-20 mt-20`;
+
+const DangerButtonSmall = tw(DangerButton)`w-full h-12 mt-0 rounded-none mt-4`;
 
 const RoundedButton = tw(
   Button
@@ -38,10 +41,19 @@ export const ButtonDanger: FC<Props> = ({ btnName }: Props) => (
     <span>{btnName}</span>
   </MotionDangerButton>
 );
+
+export const SmallButtonDanger: FC<Props> = ({ btnName }: Props) => (
+  <DangerButtonSmall>
+    <span>{btnName}</span>
+  </DangerButtonSmall>
+);
+
 export const DotsButton: FC = () => {
   return (
-    <MotionRoundedButton whileHover="hover" variants={variants}>
-      <HiOutlineDotsVertical />
-    </MotionRoundedButton>
+    <PopoverTrigger>
+      <MotionRoundedButton whileHover="hover" variants={variants}>
+        <HiOutlineDotsVertical />
+      </MotionRoundedButton>
+    </PopoverTrigger>
   );
 };
