@@ -12,7 +12,7 @@ const Content: FC = () => {
     const getMovies = async () => {
       try {
         const { data } = await axios.request(getOptions('game'));
-        data && setAllMovies(data.Search);
+        !!data && setAllMovies(data.Search);
       } catch (e) {
         console.error(e);
       }
@@ -20,7 +20,6 @@ const Content: FC = () => {
     getMovies();
   }, []);
 
-  allMovies.length !== 0 && console.log(allMovies);
   const moviesCount = allMovies.length;
 
   return (

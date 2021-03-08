@@ -7,7 +7,7 @@ const NavbarRight: FC = () => {
   return (
     <MenuRightContainer>
       <SortBy>{GLOBAL.SORT_BY}:</SortBy>
-      <Select w={48} pt={0.5} size="lg" variant="flashed" bg="#232323">
+      <Select w={48} pt={0.5} size="lg" variant="unstyled">
         {MENU_SELECT.map((option, i) => (
           <option key={i}>{option}</option>
         ))}

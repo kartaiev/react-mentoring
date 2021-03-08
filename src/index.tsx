@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import App from './App';
 import GlobalStyles from './GlobalStyles';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
+import ErrorBoundary from './ErrorBoubary';
 
 const colors = {
   pink: {
@@ -19,13 +20,36 @@ const colors = {
   }
 };
 
-const theme = extendTheme({ colors });
+const theme = extendTheme({
+  colors,
+  styles: {
+    global: {
+      body: {
+        bg: '#232323',
+        color: 'gray.50'
+      },
+      select: {
+        option: {
+          bg: '#232323'
+        }
+      },
+      a: {
+        color: 'teal.500',
+        _hover: {
+          textDecoration: 'underline'
+        }
+      }
+    }
+  }
+});
 
 render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
       <GlobalStyles />
-      <App />
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
     </ChakraProvider>
   </React.StrictMode>,
   document.getElementById('root')
