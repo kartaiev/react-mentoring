@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { DotsButton, SmallButtonDanger } from '../../elements';
+import { DotsButton } from '../../elements';
 import {
   Popover,
   PopoverContent,
@@ -8,9 +8,11 @@ import {
   PopoverCloseButton,
   Portal
 } from '@chakra-ui/react';
+import DeleteModal from '../modal/DeleteModal';
+import AddEditModal from '../modal/AddEditModal';
 import { GLOBAL } from '../../lib';
 
-const DottedButtonModal: FC = () => {
+const DottedButtonPopup: FC = () => {
   return (
     <Popover placement="auto">
       <DotsButton />
@@ -24,8 +26,12 @@ const DottedButtonModal: FC = () => {
             alignItems="center"
             px={0}
           >
-            <SmallButtonDanger btnName={GLOBAL.EDIT} />
-            <SmallButtonDanger btnName={GLOBAL.DELETE} />
+            <AddEditModal
+              btnName={GLOBAL.EDIT}
+              whatModal={'edit'}
+              whichBtn={'danger'}
+            />
+            <DeleteModal />
           </PopoverBody>
         </PopoverContent>
       </Portal>
@@ -33,4 +39,4 @@ const DottedButtonModal: FC = () => {
   );
 };
 
-export default DottedButtonModal;
+export default DottedButtonPopup;

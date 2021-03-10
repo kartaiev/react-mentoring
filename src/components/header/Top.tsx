@@ -1,13 +1,17 @@
 import React, { FC } from 'react';
 import tw from 'twin.macro';
 import Logo from '../../elements/Logo';
-import { TransparentButton } from '../../elements';
+import AddEditModal from '../modal/AddEditModal';
 import { GLOBAL } from '../../lib';
 
 const Top: FC = () => (
   <TopContainer>
     <Logo />
-    <TransparentButton btnName={GLOBAL.ADD_MOVIE} />
+    <AddEditModal
+      btnName={GLOBAL.ADD_MOVIE}
+      whatModal={'add'}
+      whichBtn={'transparent'}
+    />
   </TopContainer>
 );
 

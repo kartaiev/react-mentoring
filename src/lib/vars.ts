@@ -1,11 +1,14 @@
 export const GLOBAL = {
   ADD_MOVIE: '+ ADD MOVIE',
-  SEARCH_TITLE: 'FIND YOUR MOVIE',
   SORT_BY: 'SORT BY',
   SEARCH: 'SEARCH',
   MOVIES_FOUND: 'movies found',
   EDIT: 'Edit',
-  DELETE: 'Delete'
+  DELETE: 'Delete',
+  CLOSE: 'Close',
+  CONFIRM: 'CONFIRM',
+  SUBMIT: 'SUBMIT',
+  RESET: 'RESET'
 };
 
 export const MENU_LEFT = ['ALL', 'DOCUMENTARY', 'COMEDY', 'HORROR', 'CRIME'];

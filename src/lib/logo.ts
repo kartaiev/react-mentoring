@@ -1,4 +1,4 @@
-export enum LogoName {
+export enum LOGO {
   FIRST = 'NETFLIX',
   SECOND = 'roulette'
 }
