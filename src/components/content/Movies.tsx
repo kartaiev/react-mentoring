@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { SimpleGrid } from '@chakra-ui/react';
+import { SimpleGrid, Spinner } from '@chakra-ui/react';
 import { MoviesType } from '../../lib';
 import MovieCard from './MovieCard';
 
@@ -8,8 +8,15 @@ type Props = {
 };
 
 const Movies: FC<Props> = ({ allMovies }: Props) => {
-  const allMoviesList =
-    !!allMovies &&
+  const allMoviesList = !allMovies ? (
+    <Spinner
+      thickness="4px"
+      speed="0.65s"
+      emptyColor="gray.200"
+      color="blue.500"
+      size="xl"
+    />
+  ) : (
     allMovies.map(({ Poster, Title, Year, Type, imdbID }) => (
       <MovieCard
         key={imdbID}
@@ -18,7 +25,8 @@ const Movies: FC<Props> = ({ allMovies }: Props) => {
         Year={Year}
         Type={Type}
       />
-    ));
+    ))
+  );
 
   return (
     <SimpleGrid columns={[1, 1, 2, 3]} spacingX={48} spacingY={16} pb={6}>

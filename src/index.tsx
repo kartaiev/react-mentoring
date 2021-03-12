@@ -25,12 +25,14 @@ const theme = extendTheme({
   styles: {
     global: {
       body: {
+        fontFamily: 'Mada',
         bg: '#232323',
         color: 'gray.50'
       },
       select: {
         option: {
-          bg: '#232323'
+          bg: '#232323 !important',
+          padding: '24px !important'
         }
       },
       a: {

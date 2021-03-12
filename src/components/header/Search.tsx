@@ -1,13 +1,13 @@
 import React, { FC } from 'react';
 import tw from 'twin.macro';
-import { GLOBAL } from '../../lib';
+import { GLOBAL, SEARCH } from '../../lib';
 import { ButtonDanger, SearchInput } from '../../elements';
 
 const Search: FC = () => (
   <SearchContainer>
     <TitleInput>
-      <SearchTitle>{GLOBAL.SEARCH_TITLE}</SearchTitle>
-      <SearchInput placeholder="what do you want to watch?" />
+      <SearchTitle>{SEARCH.TITLE}</SearchTitle>
+      <SearchInput placeholder={SEARCH.PLACEHOLDER} />
     </TitleInput>
     <ButtonDanger btnName={GLOBAL.SEARCH} />
   </SearchContainer>

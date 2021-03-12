@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import tw from 'twin.macro';
-import { LogoName } from '../lib';
+import { LOGO } from '../lib';
 
 const Logo: FC = () => (
   <LogoEl>
-    {LogoName.FIRST}
-    <LogoSpan>{LogoName.SECOND}</LogoSpan>
+    {LOGO.FIRST}
+    <LogoSpan>{LOGO.SECOND}</LogoSpan>
   </LogoEl>
 );
 
