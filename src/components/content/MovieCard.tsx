@@ -1,20 +1,31 @@
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import { AspectRatio } from '@chakra-ui/react';
 import tw from 'twin.macro';
 import DottedButtonPopup from './DottedButtonPopup';
+import { MovieContext } from '../../contexts/MovieContext';
 
 type Props = {
   Poster: string;
   Title: string;
   Year: string;
   Type: string;
+  imdbID: string;
 };
 
-const MovieCard: FC<Props> = ({ Poster, Title, Year, Type }: Props) => {
+const MovieCard: FC<Props> = ({ Poster, Title, Year, Type, imdbID }: Props) => {
+  const { isMovieView, getMovie, toggleHeaderView } = useContext(MovieContext);
+
+  const onClick = () => {
+    getMovie('i', imdbID);
+
+    !isMovieView && toggleHeaderView();
+    window.scrollTo(0, 0);
+  };
+
   return (
     <CardContainer>
       <AspectRatio ratio={2 / 3}>
-        <img src={Poster} alt={Title} />
+        <img onClick={onClick} src={Poster} alt={Title} />
       </AspectRatio>
       <DottedButtonPopup />
       <TitleYear>

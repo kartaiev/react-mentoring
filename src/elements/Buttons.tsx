@@ -16,25 +16,19 @@ const RoundedButton = tw(
   Button
 )`p-3 bg-bgColor rounded-full flex justify-center items-center text-gray-50 absolute top-6 right-6`;
 
-const variants: any = {
-  hover: {
-    scale: 1.1
-  },
-  transition: { ease: 'easeOut' },
-  off: { scale: 1 }
-};
-
-const MotionButton = motion.custom(Button);
-const MotionDangerButton = motion.custom(DangerButton);
-const MotionDangerButtonLG = motion.custom(DangerButtonLG);
-const MotionDangerButtonSM = motion.custom(DangerButtonSM);
-const MotionBorderedButtonSM = motion.custom(BorderedButtonSM);
-const MotionRoundedButton = motion.custom(RoundedButton);
+const MotionButton = motion(Button);
+const MotionDangerButton = motion(DangerButton);
+const MotionDangerButtonLG = motion(DangerButtonLG);
+const MotionDangerButtonSM = motion(DangerButtonSM);
+const MotionBorderedButtonSM = motion(BorderedButtonSM);
+const MotionRoundedButton = motion(RoundedButton);
 
 type Props = {
   btnName: string;
   onClose?: () => void;
   onOpen?: () => void;
+  onClick?: (e: React.FormEvent) => void;
+  type?: 'button' | 'submit' | 'reset' | undefined;
 };
 
 type SmallProps = {
@@ -43,13 +37,13 @@ type SmallProps = {
 };
 
 export const TransparentButton: FC<Props> = ({ btnName, onOpen }: Props) => (
-  <MotionButton onClick={onOpen} whileHover="hover" variants={variants}>
+  <MotionButton onClick={onOpen} whileHover={{ scale: 1.1 }}>
     <span>{btnName}</span>
   </MotionButton>
 );
 
-export const ButtonDanger: FC<Props> = ({ btnName }: Props) => (
-  <MotionDangerButton whileHover="hover" variants={variants}>
+export const ButtonDanger: FC<Props> = ({ btnName, onClick, type }: Props) => (
+  <MotionDangerButton whileHover={{ scale: 1.1 }} onClick={onClick} type={type}>
     <span>{btnName}</span>
   </MotionDangerButton>
 );
@@ -66,7 +60,7 @@ export const SmallButtonDanger: FC<SmallProps> = ({
 export const MotionButtonDangerLG: FC<SmallProps> = ({
   btnName
 }: SmallProps) => (
-  <MotionDangerButtonLG whileHover="hover" variants={variants}>
+  <MotionDangerButtonLG whileHover={{ scale: 1.1 }}>
     <span>{btnName}</span>
   </MotionDangerButtonLG>
 );
@@ -74,7 +68,7 @@ export const MotionButtonDangerLG: FC<SmallProps> = ({
 export const MotionButtonDangerSM: FC<SmallProps> = ({
   btnName
 }: SmallProps) => (
-  <MotionDangerButtonSM whileHover="hover" variants={variants}>
+  <MotionDangerButtonSM whileHover={{ scale: 1.1 }}>
     <span>{btnName}</span>
   </MotionDangerButtonSM>
 );
@@ -82,7 +76,7 @@ export const MotionButtonDangerSM: FC<SmallProps> = ({
 export const MotionButtonBorderedSM: FC<SmallProps> = ({
   btnName
 }: SmallProps) => (
-  <MotionBorderedButtonSM whileHover="hover" variants={variants}>
+  <MotionBorderedButtonSM whileHover={{ scale: 1.1 }}>
     <span>{btnName}</span>
   </MotionBorderedButtonSM>
 );
@@ -90,7 +84,7 @@ export const MotionButtonBorderedSM: FC<SmallProps> = ({
 export const DotsButton: FC = () => {
   return (
     <PopoverTrigger>
-      <MotionRoundedButton whileHover="hover" variants={variants}>
+      <MotionRoundedButton whileHover={{ scale: 1.1 }}>
         <HiOutlineDotsVertical />
       </MotionRoundedButton>
     </PopoverTrigger>

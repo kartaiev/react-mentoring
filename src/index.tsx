@@ -4,6 +4,7 @@ import App from './App';
 import GlobalStyles from './GlobalStyles';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import ErrorBoundary from './ErrorBoubary';
+import { MoviesProvider } from './contexts/MovieContext';
 
 const colors = {
   pink: {
@@ -50,7 +51,9 @@ render(
     <ChakraProvider theme={theme}>
       <GlobalStyles />
       <ErrorBoundary>
-        <App />
+        <MoviesProvider>
+          <App />
+        </MoviesProvider>
       </ErrorBoundary>
     </ChakraProvider>
   </React.StrictMode>,

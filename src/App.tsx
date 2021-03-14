@@ -1,20 +1,22 @@
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import Layout from './components/layout/Layout';
 import Header from './components/header/Header';
 import Content from './components/content/Content';
-import Top from './components/header/Top';
-import Search from './components/header/Search';
+import Search from './components/search/Search';
+import { MovieContext } from './contexts/MovieContext';
+import MovieView from './components/moviewView/MovieView';
 
-const App: FC = () => (
-  <>
-    <Header>
-      <Top />
-      <Search />
-    </Header>
-    <Layout>
-      <Content />
-    </Layout>
-  </>
-);
+const App: FC = () => {
+  const { isMovieView } = useContext(MovieContext);
+
+  return (
+    <>
+      <Header>{isMovieView ? <MovieView /> : <Search />}</Header>
+      <Layout>
+        <Content />
+      </Layout>
+    </>
+  );
+};
 
 export default App;

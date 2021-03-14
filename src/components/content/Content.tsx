@@ -1,33 +1,20 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useContext } from 'react';
 import { GLOBAL } from '../../lib';
 import Movies from './Movies';
 import tw from 'twin.macro';
-import axios from 'axios';
-import getOptions from '../../utils/getOptions';
-import { MoviesType } from '../../lib';
+import { MovieContext } from '../../contexts/MovieContext';
 
 const Content: FC = () => {
-  const [allMovies, setAllMovies] = useState<MoviesType[]>([]);
-  useEffect(() => {
-    const getMovies = async () => {
-      try {
-        const { data } = await axios.request(getOptions('game'));
-        !!data && setAllMovies(data.Search);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    getMovies();
-  }, []);
+  const { allMovies } = useContext(MovieContext);
 
-  const moviesCount = allMovies.length;
+  const moviesCount = allMovies ? allMovies.length : 0;
 
   return (
     <ContentContainer>
       <MoviesFound>
         {moviesCount} {GLOBAL.MOVIES_FOUND}
       </MoviesFound>
-      <Movies allMovies={allMovies} />
+      <Movies />
     </ContentContainer>
   );
 };
