@@ -1,1 +1,1 @@
-export * from './getOptions';
+export * from './axiosOptions';

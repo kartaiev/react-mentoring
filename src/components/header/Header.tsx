@@ -1,6 +1,7 @@
 import React, { FC, ReactNode } from 'react';
 import tw from 'twin.macro';
 import img from '../../assets/images/header-image.jpg';
+import Top from './Top';
 
 type Props = {
   children: ReactNode;
@@ -12,6 +13,7 @@ const Header: FC<Props> = ({ children }: Props) => (
       backgroundImage: `url(${img})`
     }}
   >
+    <Top />
     {children}
   </HeaderContainer>
 );

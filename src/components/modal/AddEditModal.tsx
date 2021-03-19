@@ -37,9 +37,7 @@ const AddEditModal: FC<Props> = ({ whatModal, whichBtn, btnName }: Props) => {
     );
   });
 
-  formFields.splice(3, 0, <FormSelect />);
-
-  console.log(formFields);
+  formFields.splice(3, 0, <FormSelect key={'selectKey'} />);
 
   const idField = (
     <>
