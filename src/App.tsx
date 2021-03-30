@@ -4,7 +4,7 @@ import Header from './components/header/Header';
 import Content from './components/content/Content';
 import Search from './components/search/Search';
 import { MovieContext } from './contexts/MovieContext';
-import MovieView from './components/moviewView/MovieView';
+import MovieView from './components/movieView/MovieView';
 
 const App: FC = () => {
   const { isMovieView } = useContext(MovieContext);

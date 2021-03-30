@@ -1,27 +1,35 @@
 import React, { FC } from 'react';
-import {
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton
-} from '@chakra-ui/react';
+import { ModalHeader, ModalBody, ModalCloseButton } from '@chakra-ui/react';
 import { DELETE, GLOBAL } from '../../lib';
-import { MotionButtonDangerSM } from '../../elements';
 import tw from 'twin.macro';
 import ModalComponent from './ModalComponent';
+import { useDispatch } from 'react-redux';
+import { deleteMovie } from '../../state/actions';
 
-const DeleteModal: FC = () => {
+type Props = {
+  ID?: number;
+};
+
+const DeleteModal: FC<Props> = ({ ID }: Props) => {
+  const dispatch = useDispatch();
+
+  const handleDelete = () => {
+    ID && dispatch(deleteMovie(ID));
+  };
+
   return (
-    <ModalComponent btnName={GLOBAL.DELETE} whichBtn={'danger'}>
+    <ModalComponent
+      btnName={GLOBAL.DELETE}
+      whichBtn={'danger'}
+      onClick={handleDelete}
+      whatModal="delete"
+    >
       <ModalCloseButton />
       <ModalHeader />
       <ModalBody>
         <Title>{DELETE.TITLE}</Title>
         <Text>{DELETE.QUESTION}</Text>
       </ModalBody>
-      <ModalFooter>
-        <MotionButtonDangerSM btnName={GLOBAL.CONFIRM} />
-      </ModalFooter>
     </ModalComponent>
   );
 };

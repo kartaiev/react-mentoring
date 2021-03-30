@@ -2,17 +2,22 @@ import React, { FC, useContext } from 'react';
 import tw from 'twin.macro';
 import Logo from '../../elements/Logo';
 import AddEditModal from '../modal/AddEditModal';
-import { GLOBAL, MovieType } from '../../lib';
+import { GLOBAL } from '../../lib';
 import { IconButton } from '@chakra-ui/react';
 import { Search2Icon } from '@chakra-ui/icons';
 import { MovieContext } from '../../contexts/MovieContext';
+import { MovieType } from '../../state/interfaces';
+import { useDispatch } from 'react-redux';
+import { getMovies } from '../../state/actions';
 
 const Top: FC = () => {
-  const { isMovieView, toggleHeaderView, setMovie } = useContext(MovieContext);
+  const dispatch = useDispatch();
+
+  const { isMovieView, toggleHeaderView } = useContext(MovieContext);
 
   const onClick = () => {
     toggleHeaderView();
-    setMovie({} as MovieType);
+    dispatch(getMovies());
   };
 
   const rightButton = isMovieView ? (
@@ -28,6 +33,7 @@ const Top: FC = () => {
       btnName={GLOBAL.ADD_MOVIE}
       whatModal={'add'}
       whichBtn={'transparent'}
+      movie={{} as MovieType}
     />
   );
 

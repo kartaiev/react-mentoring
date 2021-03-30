@@ -1,19 +1,19 @@
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 import tw from 'twin.macro';
 import { GLOBAL, SEARCH } from '../../lib';
 import { ButtonDanger, SearchInput } from '../../elements';
-import { MovieContext } from '../../contexts/MovieContext';
 import { useField } from '../../hooks';
+import { searchMovies } from '../../state/actions';
+import { useDispatch } from 'react-redux';
 
 const Search: FC = () => {
-  const { getAllMovies } = useContext(MovieContext);
-
   const searchField = useField();
+  const dispatch = useDispatch();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    getAllMovies('s', searchField.value);
+    dispatch(searchMovies(searchField.value));
 
     searchField.setValue('');
   };

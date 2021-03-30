@@ -13,4 +13,9 @@ export const GLOBAL = {
 
 export const MENU_LEFT = ['ALL', 'DOCUMENTARY', 'COMEDY', 'HORROR', 'CRIME'];
 
-export const MENU_SELECT = ['RELEASE DATE', 'DIRECTOR'];
+export const MENU_SELECT = [
+  { label: 'TITLE', value: 'title' },
+  { label: 'RELEASE DATE', value: 'release_date' },
+  { label: 'RATING', value: 'vote_average' },
+  { label: 'BUDGET', value: 'budget' }
+];

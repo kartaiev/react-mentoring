@@ -6,7 +6,9 @@ import { PopoverTrigger } from '@chakra-ui/react';
 
 const Button = tw.button`px-12 bg-bgColorAlt bg-opacity-70 text-danger font-logoAlt rounded font-bold text-2xl`;
 const DangerButton = tw(Button)`px-24 bg-danger text-gray-50 h-20 mt-20`;
-const DangerButtonLG = tw(DangerButton)`w-full h-12 mt-0 rounded-none mt-4`;
+const DangerButtonLG = tw(
+  DangerButton
+)`px-12 w-full h-12 mt-0 rounded-none mt-4`;
 const DangerButtonSM = tw(DangerButton)`w-1/3 h-12 mt-0 px-0`;
 const BorderedButtonSM = tw(
   DangerButtonSM
@@ -18,26 +20,23 @@ const RoundedButton = tw(
 
 const MotionButton = motion(Button);
 const MotionDangerButton = motion(DangerButton);
-const MotionDangerButtonLG = motion(DangerButtonLG);
 const MotionDangerButtonSM = motion(DangerButtonSM);
 const MotionBorderedButtonSM = motion(BorderedButtonSM);
 const MotionRoundedButton = motion(RoundedButton);
 
 type Props = {
   btnName: string;
-  onClose?: () => void;
-  onOpen?: () => void;
-  onClick?: (e: React.FormEvent) => void;
+  onClick?: (e: React.FormEvent) => void | (() => void);
   type?: 'button' | 'submit' | 'reset' | undefined;
 };
 
 type SmallProps = {
   btnName: string;
-  onOpen?: () => void;
+  onClick?: () => void;
 };
 
-export const TransparentButton: FC<Props> = ({ btnName, onOpen }: Props) => (
-  <MotionButton onClick={onOpen} whileHover={{ scale: 1.1 }}>
+export const TransparentButton: FC<Props> = ({ btnName, onClick }: Props) => (
+  <MotionButton onClick={onClick} whileHover={{ scale: 1.1 }}>
     <span>{btnName}</span>
   </MotionButton>
 );
@@ -50,25 +49,18 @@ export const ButtonDanger: FC<Props> = ({ btnName, onClick, type }: Props) => (
 
 export const SmallButtonDanger: FC<SmallProps> = ({
   btnName,
-  onOpen
+  onClick
 }: SmallProps) => (
-  <DangerButtonLG onClick={onOpen}>
+  <DangerButtonLG onClick={onClick}>
     <span>{btnName}</span>
   </DangerButtonLG>
 );
 
-export const MotionButtonDangerLG: FC<SmallProps> = ({
-  btnName
-}: SmallProps) => (
-  <MotionDangerButtonLG whileHover={{ scale: 1.1 }}>
-    <span>{btnName}</span>
-  </MotionDangerButtonLG>
-);
-
 export const MotionButtonDangerSM: FC<SmallProps> = ({
-  btnName
+  btnName,
+  onClick
 }: SmallProps) => (
-  <MotionDangerButtonSM whileHover={{ scale: 1.1 }}>
+  <MotionDangerButtonSM onClick={onClick} whileHover={{ scale: 1.1 }}>
     <span>{btnName}</span>
   </MotionDangerButtonSM>
 );
