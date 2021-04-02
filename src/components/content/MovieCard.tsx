@@ -3,20 +3,33 @@ import { AspectRatio } from '@chakra-ui/react';
 import tw from 'twin.macro';
 import DottedButtonPopup from './DottedButtonPopup';
 import { MovieContext } from '../../contexts/MovieContext';
+import { useDispatch } from 'react-redux';
+import { getMovie } from '../../state/actions';
+import { MovieType } from '../../state/interfaces';
 
 type Props = {
   Poster: string;
   Title: string;
   Year: string;
-  Type: string;
-  imdbID: string;
+  Genres: string[];
+  ID?: number;
+  movie: MovieType;
 };
 
-const MovieCard: FC<Props> = ({ Poster, Title, Year, Type, imdbID }: Props) => {
-  const { isMovieView, getMovie, toggleHeaderView } = useContext(MovieContext);
+const MovieCard: FC<Props> = ({
+  Poster,
+  Title,
+  Year,
+  Genres,
+  ID,
+  movie
+}: Props) => {
+  const dispatch = useDispatch();
+
+  const { isMovieView, toggleHeaderView } = useContext(MovieContext);
 
   const onClick = () => {
-    getMovie('i', imdbID);
+    dispatch(getMovie(movie));
 
     !isMovieView && toggleHeaderView();
     window.scrollTo(0, 0);
@@ -27,12 +40,12 @@ const MovieCard: FC<Props> = ({ Poster, Title, Year, Type, imdbID }: Props) => {
       <AspectRatio ratio={2 / 3}>
         <img onClick={onClick} src={Poster} alt={Title} />
       </AspectRatio>
-      <DottedButtonPopup />
+      <DottedButtonPopup ID={ID} movie={movie} />
       <TitleYear>
         <TitleSpan>{Title}</TitleSpan>
         <span>{Year}</span>
       </TitleYear>
-      <TypeParagraph>{Type}</TypeParagraph>
+      <TypeParagraph>{Genres ? Genres[0] : ''}</TypeParagraph>
     </CardContainer>
   );
 };

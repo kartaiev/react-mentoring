@@ -16,9 +16,17 @@ export enum ADD_EDIT_MOVIE {
   TIME_PLACEHOLDER = 'Runtime here'
 }
 
-export const addEditMovie = [
-  { name: 'TITLE', placeholder: 'Title' },
-  { name: 'MOVIE URL', placeholder: 'Movie URL here' },
-  { name: 'OVERVIEW', placeholder: 'Overview here' },
-  { name: 'RUNTIME', placeholder: 'Runtime here' }
+export const addEditMovieStrings = [
+  { name: 'TITLE', placeholder: 'Title', value: 'title' },
+  { name: 'TAGLINE', placeholder: 'Tagline here', value: 'tagline' },
+  { name: 'MOVIE URL', placeholder: 'Movie URL here', value: 'poster_path' },
+  { name: 'OVERVIEW', placeholder: 'Overview here', value: 'overview' }
+];
+
+export const addEditMovieNumbers = [
+  { name: 'RUNTIME', placeholder: 'Runtime here', value: 'runtime' },
+  { name: 'AVERAGE VOTE', placeholder: 'Average vote', value: 'vote_average' },
+  { name: 'VOTE COUNT', placeholder: 'Vote count', value: 'vote_count' },
+  { name: 'BUDGET', placeholder: 'Budget here', value: 'budget' },
+  { name: 'REVENUE', placeholder: 'Revenue here', value: 'revenue' }
 ];

@@ -1,18 +1,19 @@
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 import { GLOBAL } from '../../lib';
 import Movies from './Movies';
 import tw from 'twin.macro';
-import { MovieContext } from '../../contexts/MovieContext';
+import { DefaultState } from '../../state/interfaces/default';
+import { useSelector } from 'react-redux';
 
 const Content: FC = () => {
-  const { allMovies } = useContext(MovieContext);
-
-  const moviesCount = allMovies ? allMovies.length : 0;
+  const count = useSelector(
+    (state: DefaultState) => state.movies.data.totalAmount
+  );
 
   return (
     <ContentContainer>
       <MoviesFound>
-        {moviesCount} {GLOBAL.MOVIES_FOUND}
+        {count} {GLOBAL.MOVIES_FOUND}
       </MoviesFound>
       <Movies />
     </ContentContainer>

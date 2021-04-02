@@ -1,41 +1,41 @@
-import React, { FC, useContext } from 'react';
-import { SimpleGrid, Skeleton, Flex } from '@chakra-ui/react';
+import React, { FC, useEffect } from 'react';
+import { SimpleGrid } from '@chakra-ui/react';
 import MovieCard from './MovieCard';
-import { MovieContext } from '../../contexts/MovieContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { getMovies } from '../../state/actions';
+import { DefaultState } from '../../state/interfaces/default';
 
 const Movies: FC = () => {
-  const { allMovies, error } = useContext(MovieContext);
+  const dispatch = useDispatch();
+  const movies = useSelector((state: DefaultState) => state.movies);
+  const { data } = movies.data;
+
+  useEffect(() => {
+    dispatch(getMovies());
+  }, []);
 
   const allMoviesList =
-    !!allMovies &&
-    !error &&
-    allMovies.map(({ Poster, Title, Year, Type, imdbID }) => (
+    !!data.length &&
+    data.map((movie) => (
       <MovieCard
-        key={imdbID}
-        Poster={Poster}
-        Title={Title}
-        Year={Year}
-        Type={Type}
-        imdbID={imdbID}
+        key={movie.id}
+        Poster={movie.poster_path}
+        Title={movie.title}
+        Year={movie.release_date}
+        Genres={movie.genres}
+        ID={movie.id}
+        movie={movie}
       />
     ));
 
   return (
     <>
-      {error ? (
-        <Flex justify="center" align="center" fontSize={72}>
-          {error}
-        </Flex>
-      ) : (
-        <Skeleton
-          isLoaded={allMovies && allMovies.length !== 0}
-          startColor="pink.500"
-          endColor="orange.500"
-        >
+      {!movies.loading && (
+        <>
           <SimpleGrid columns={[1, 1, 2, 3]} spacingX={48} spacingY={16} pb={6}>
             {allMoviesList}
           </SimpleGrid>
-        </Skeleton>
+        </>
       )}
     </>
   );
