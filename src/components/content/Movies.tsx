@@ -4,6 +4,7 @@ import MovieCard from './MovieCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMovies } from '../../state/actions';
 import { DefaultState } from '../../state/interfaces/default';
+import { idGenerate } from '../../utils/idGenerete';
 
 const Movies: FC = () => {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const Movies: FC = () => {
     !!data.length &&
     data.map((movie) => (
       <MovieCard
-        key={movie.id}
+        key={idGenerate()}
         Poster={movie.poster_path}
         Title={movie.title}
         Year={movie.release_date}

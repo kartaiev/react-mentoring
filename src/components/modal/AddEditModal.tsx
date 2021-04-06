@@ -3,23 +3,29 @@ import ModalComponent from './ModalComponent';
 import {
   ADD_EDIT_MOVIE,
   addEditMovieNumbers,
-  addEditMovieStrings
+  addEditMovieStrings,
+  genresSelect,
+  GLOBAL
 } from '../../lib';
 import {
-  Box,
   ModalBody,
   ModalCloseButton,
   ModalHeader,
-  FormControl,
-  FormLabel,
-  Input,
-  SimpleGrid
+  SimpleGrid,
+  ModalFooter,
+  useDisclosure
 } from '@chakra-ui/react';
-import tw from 'twin.macro';
 import { MovieType } from '../../state/interfaces';
 import { addMovie, updateMovie } from '../../state/actions';
 import { useDispatch } from 'react-redux';
-import FormSelect from './FormSelect';
+import FormSelect, { Item } from '../form/FormSelect';
+import FormInput from '../form/FormInput';
+import { Formik, Form } from 'formik';
+import { MotionButtonBorderedSM, MotionButtonDangerSM } from '../../elements';
+import { getInitialFields } from '../form/getInitialFields';
+import IdField from '../form/IdField';
+import { getInitialGenres } from '../form/getInitialGenres';
+import { schema } from '../form/validationSchema';
 
 type Props = {
   whatModal: string;
@@ -34,134 +40,103 @@ const AddEditModal: FC<Props> = ({
   btnName,
   movie
 }: Props) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
+
+  const [pickerItems, setPickerItems] = useState(genresSelect);
+  const [selectedItems, setSelectedItems] = useState<Item[]>(
+    getInitialGenres(movie) || []
+  );
 
   const modalTitle =
     whatModal === 'add'
       ? ADD_EDIT_MOVIE.ADD_MOVIE_TITLE
       : ADD_EDIT_MOVIE.EDIT_MOVIE_TITLE;
 
-  const initialFields =
-    whatModal === 'add'
-      ? {
-          title: '',
-          tagline: '',
-          vote_average: 0,
-          vote_count: 0,
-          poster_path: '',
-          overview: '',
-          release_date: new Date().toISOString(),
-          budget: 0,
-          revenue: 0,
-          runtime: 0,
-          genres: ['Movie']
-        }
-      : {
-          title: movie.title || '...',
-          tagline: movie.tagline || '...',
-          vote_average: movie.vote_average || 0,
-          vote_count: movie.vote_count || 0,
-          poster_path: movie.poster_path,
-          overview: movie.overview || '...',
-          release_date: movie.release_date,
-          budget: movie.budget || 0,
-          revenue: movie.revenue || 0,
-          runtime: movie.runtime || 0,
-          genres: movie.genres || ['Movie'],
-          id: movie.id
-        };
+  const handleEditMovie = (values: MovieType) => {
+    dispatch(updateMovie(values));
+  };
 
-  const [fields, setFields] = useState<MovieType>(initialFields);
+  const handleAddMovie = (values: MovieType) => {
+    dispatch(addMovie(values));
+    setSelectedItems([]);
+  };
 
-  const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    const value = evt.target.value;
-    setFields({
-      ...fields,
-      [evt.target.name]: value
+  const onSubmit = (values: MovieType) => {
+    values.genres = selectedItems.map(({ value }) => {
+      return value.charAt(0).toUpperCase() + value.slice(1);
     });
+    onClose();
+    return whatModal === 'add'
+      ? handleAddMovie(values)
+      : handleEditMovie(values);
   };
 
-  const handleEditMovie = () => {
-    fields.runtime = +fields.runtime;
-    dispatch(updateMovie(fields));
-  };
+  const formStringFields = addEditMovieStrings.map((field) => (
+    <FormInput
+      key={field.name}
+      name={field.value}
+      label={field.name}
+      placeholder={field.placeholder}
+    />
+  ));
 
-  const handleAddMovie = () => {
-    fields.runtime = +fields.runtime;
-    dispatch(addMovie(fields));
-  };
+  const formNumberFields = addEditMovieNumbers.map((field) => (
+    <FormInput
+      key={field.name}
+      name={field.value}
+      label={field.name}
+      placeholder={field.placeholder}
+    />
+  ));
 
-  const handleSubmit = () => {
-    return whatModal === 'add' ? handleAddMovie() : handleEditMovie();
-  };
-
-  const formStringFields = addEditMovieStrings.map((field) => {
-    return (
-      <Box key={field.name} id={field.name}>
-        <FormLabel color="#F65261" fontWeight="bold">
-          {field.name}
-        </FormLabel>
-        <Input
-          borderColor="gray.600"
-          onChange={handleChange}
-          mb={4}
-          placeholder={field.placeholder}
-          name={field.value}
-          value={fields[field.value]}
-        />
-      </Box>
-    );
-  });
-
-  const formNumberFields = addEditMovieNumbers.map((field) => {
-    return (
-      <Box key={field.name} id={field.name}>
-        <FormLabel color="#F65261" fontWeight="bold">
-          {field.name}
-        </FormLabel>
-        <Input
-          mb={4}
-          onChange={handleChange}
-          value={fields[field.value]}
-          name={field.value}
-          colorScheme="gray"
-          borderColor="gray.600"
-        />
-      </Box>
-    );
-  });
-
-  formNumberFields.splice(1, 0, <FormSelect key={'selectKey'} />);
-
-  const idField = (
-    <>
-      <FormLabel color="#F65261" fontWeight="bold">
-        {ADD_EDIT_MOVIE.ID}
-      </FormLabel>
-      <ID>{movie.id}</ID>
-    </>
-  );
   return (
     <ModalComponent
       btnName={btnName}
       whichBtn={whichBtn}
-      onClick={handleSubmit}
+      onClose={onClose}
+      onOpen={onOpen}
+      isOpen={isOpen}
     >
       <ModalCloseButton />
       <ModalHeader fontSize="3xl">{modalTitle}</ModalHeader>
-      <ModalBody>
-        <FormControl>
-          {whatModal === 'edit' && idField}
-          {formStringFields}
-          <SimpleGrid columns={2} spacingX={10}>
-            {formNumberFields}
-          </SimpleGrid>
-        </FormControl>
-      </ModalBody>
+      <Formik
+        initialValues={getInitialFields(whatModal, movie)}
+        onSubmit={onSubmit}
+        validationSchema={schema}
+      >
+        {({ handleSubmit }) => (
+          <Form onSubmit={handleSubmit}>
+            <ModalBody>
+              {whatModal === 'edit' && <IdField id={movie.id} />}
+              {formStringFields}
+              <SimpleGrid columns={2} spacingX={10}>
+                <FormInput
+                  name={'release_date'}
+                  label={ADD_EDIT_MOVIE.DATE}
+                  placeholder={ADD_EDIT_MOVIE.DATE_PLACEHOLDER}
+                  type={'date'}
+                />
+                {formNumberFields}
+              </SimpleGrid>
+              <FormSelect
+                key={'selectKey'}
+                name={'genres'}
+                pickerItems={pickerItems}
+                setPickerItems={setPickerItems}
+                selectedItems={selectedItems}
+                setSelectedItems={setSelectedItems}
+              />
+            </ModalBody>
+            <ModalFooter>
+              <MotionButtonBorderedSM type="reset" btnName={GLOBAL.RESET} />
+              <MotionButtonDangerSM type="submit" btnName={GLOBAL.SUBMIT} />
+            </ModalFooter>
+          </Form>
+        )}
+      </Formik>
     </ModalComponent>
   );
 };
 
 export default AddEditModal;
-
-const ID = tw.p`mb-4`;
