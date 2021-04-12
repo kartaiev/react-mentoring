@@ -33,6 +33,7 @@ type Props = {
 type SmallProps = {
   btnName: string;
   onClick?: () => void;
+  type?: 'reset' | 'submit' | 'button' | undefined;
 };
 
 export const TransparentButton: FC<Props> = ({ btnName, onClick }: Props) => (
@@ -58,17 +59,23 @@ export const SmallButtonDanger: FC<SmallProps> = ({
 
 export const MotionButtonDangerSM: FC<SmallProps> = ({
   btnName,
-  onClick
+  onClick,
+  type
 }: SmallProps) => (
-  <MotionDangerButtonSM onClick={onClick} whileHover={{ scale: 1.1 }}>
+  <MotionDangerButtonSM
+    type={type}
+    onClick={onClick}
+    whileHover={{ scale: 1.1 }}
+  >
     <span>{btnName}</span>
   </MotionDangerButtonSM>
 );
 
 export const MotionButtonBorderedSM: FC<SmallProps> = ({
-  btnName
+  btnName,
+  type
 }: SmallProps) => (
-  <MotionBorderedButtonSM whileHover={{ scale: 1.1 }}>
+  <MotionBorderedButtonSM type={type} whileHover={{ scale: 1.1 }}>
     <span>{btnName}</span>
   </MotionBorderedButtonSM>
 );
