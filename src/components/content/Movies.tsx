@@ -1,19 +1,33 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useContext, useEffect } from 'react';
 import { SimpleGrid } from '@chakra-ui/react';
 import MovieCard from './MovieCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMovies } from '../../state/actions';
 import { DefaultState } from '../../state/interfaces/default';
 import { idGenerate } from '../../utils/idGenerete';
+import {
+  Route,
+  useHistory,
+  useLocation,
+  useRouteMatch
+} from 'react-router-dom';
+import { MovieContext } from '../../contexts/MovieContext';
+import NotFound from '../search/NotFound';
 
 const Movies: FC = () => {
   const dispatch = useDispatch();
+  const { push } = useHistory();
+  const { setGenre } = useContext(MovieContext);
+  const location = useLocation();
+  const { params } = useRouteMatch<Record<string, string>>();
   const movies = useSelector((state: DefaultState) => state.movies);
   const { data } = movies.data;
 
   useEffect(() => {
-    dispatch(getMovies());
-  }, []);
+    location.pathname === '/movies'
+      ? dispatch(getMovies())
+      : setGenre(params.genre);
+  }, [location]);
 
   const allMoviesList =
     !!data.length &&
@@ -36,6 +50,9 @@ const Movies: FC = () => {
           <SimpleGrid columns={[1, 1, 2, 3]} spacingX={48} spacingY={16} pb={6}>
             {allMoviesList}
           </SimpleGrid>
+          <Route path="/movies/notfound">
+            <NotFound />
+          </Route>
         </>
       )}
     </>

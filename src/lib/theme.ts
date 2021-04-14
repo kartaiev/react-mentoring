@@ -15,12 +15,6 @@ export const theme = extendTheme({
           bg: '#232323 !important',
           padding: '24px !important'
         }
-      },
-      a: {
-        color: 'teal.500',
-        _hover: {
-          textDecoration: 'underline'
-        }
       }
     }
   }

@@ -1,22 +1,35 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import tw from 'twin.macro';
 import { GLOBAL, SEARCH } from '../../lib';
 import { ButtonDanger, SearchInput } from '../../elements';
 import { useField } from '../../hooks';
 import { searchMovies } from '../../state/actions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
+import { DefaultState } from '../../state/interfaces/default';
 
 const Search: FC = () => {
+  const count = useSelector((state: DefaultState) => state.movies.data.data);
+  const { push } = useHistory();
   const searchField = useField();
   const dispatch = useDispatch();
+  const { url } = useRouteMatch();
+  const location = useLocation();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    dispatch(searchMovies(searchField.value));
+    push(`${url}/search?title=${searchField.value}`);
 
     searchField.setValue('');
   };
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const title = params.get('title');
+    title && dispatch(searchMovies(title));
+    // !count.length && push('/movies/notfound');
+  }, [location]);
 
   return (
     <SearchContainer onSubmit={handleSubmit}>
