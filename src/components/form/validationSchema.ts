@@ -1,4 +1,4 @@
-const Yup = require('yup');
+import Yup from '../../lib';
 
 export const schema = Yup.object().shape({
   title: Yup.string().required('Title is required'),

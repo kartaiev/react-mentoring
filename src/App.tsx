@@ -1,20 +1,30 @@
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import Header from './components/header/Header';
 import Content from './components/content/Content';
-import Search from './components/search/Search';
-import { MovieContext } from './contexts/MovieContext';
-import MovieView from './components/movieView/MovieView';
+import ErrorPage from './components/ErrorPage';
 
 const App: FC = () => {
-  const { isMovieView } = useContext(MovieContext);
-
   return (
     <>
-      <Header>{isMovieView ? <MovieView /> : <Search />}</Header>
-      <Layout>
-        <Content />
-      </Layout>
+      <Switch>
+        <Route exact path="/">
+          <Redirect to="/movies" />
+        </Route>
+        <Route path="/movies">
+          <Header />
+          <Layout>
+            <Content />
+          </Layout>
+        </Route>
+        <Route path="/404">
+          <ErrorPage />
+        </Route>
+        <Route path="*">
+          <Redirect to="/404" />
+        </Route>
+      </Switch>
     </>
   );
 };

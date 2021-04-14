@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useContext, useState } from 'react';
 import ModalComponent from './ModalComponent';
 import {
   ADD_EDIT_MOVIE,
@@ -26,6 +26,7 @@ import { getInitialFields } from '../form/getInitialFields';
 import IdField from '../form/IdField';
 import { getInitialGenres } from '../form/getInitialGenres';
 import { schema } from '../form/validationSchema';
+import { MovieContext } from '../../contexts/MovieContext';
 
 type Props = {
   whatModal: string;
@@ -34,14 +35,10 @@ type Props = {
   movie: MovieType;
 };
 
-const AddEditModal: FC<Props> = ({
-  whatModal,
-  whichBtn,
-  btnName,
-  movie
-}: Props) => {
+const AddEditModal: FC<Props> = ({ whatModal, whichBtn, btnName }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
+  const { movie } = useContext(MovieContext);
 
   const [pickerItems, setPickerItems] = useState(genresSelect);
   const [selectedItems, setSelectedItems] = useState<Item[]>(

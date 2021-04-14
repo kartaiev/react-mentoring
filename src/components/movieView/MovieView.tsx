@@ -1,11 +1,20 @@
-import React, { FC } from 'react';
+import React, { FC, useContext, useEffect } from 'react';
 import { AspectRatio, Box, Text } from '@chakra-ui/react';
 import tw from 'twin.macro';
-import { useSelector } from 'react-redux';
-import { DefaultState } from '../../state/interfaces/default';
+import { useDispatch } from 'react-redux';
+import { useLocation, useRouteMatch } from 'react-router-dom';
+import { getMovie } from '../../state/actions';
+import { MovieContext } from '../../contexts/MovieContext';
 
 const MovieView: FC = () => {
-  const movie = useSelector((state: DefaultState) => state.movie);
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const { movie } = useContext(MovieContext);
+  const { params } = useRouteMatch<Record<string, string | undefined>>();
+
+  useEffect(() => {
+    params.id && dispatch(getMovie(params.id));
+  }, [location]);
 
   const {
     poster_path,
@@ -15,7 +24,7 @@ const MovieView: FC = () => {
     release_date,
     runtime,
     overview
-  } = movie.data;
+  } = movie;
 
   const genreList = genres && (
     <Box fontSize={24} color="gray.400">
