@@ -4,12 +4,10 @@ import { GLOBAL, SEARCH } from '../../lib';
 import { ButtonDanger, SearchInput } from '../../elements';
 import { useField } from '../../hooks';
 import { searchMovies } from '../../state/actions';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
-import { DefaultState } from '../../state/interfaces/default';
 
 const Search: FC = () => {
-  const movies = useSelector((state: DefaultState) => state.movies.data.data);
   const { push } = useHistory();
   const searchField = useField();
   const dispatch = useDispatch();
@@ -29,9 +27,8 @@ const Search: FC = () => {
     const title = params.get('title');
     if (title) {
       dispatch(searchMovies(title));
-      !movies.length && push('/movies/notfound');
     }
-  }, [location, movies]);
+  }, [location]);
 
   return (
     <SearchContainer onSubmit={handleSubmit}>

@@ -1,32 +1,33 @@
-import React, { FC, useContext, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { TabList, Tab } from '@chakra-ui/react';
 import { MENU_LEFT } from '../../../lib';
 import tw from 'twin.macro';
 import NavbarRight from './NavbarRight';
 import { useDispatch } from 'react-redux';
 import { filterMovies } from '../../../state/actions';
-import { useHistory, useRouteMatch } from 'react-router-dom';
-import { MovieContext } from '../../../contexts/MovieContext';
+import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 
 const NavbarLeft: FC = () => {
   const { push } = useHistory();
   const { url } = useRouteMatch();
   const dispatch = useDispatch();
-  const { genre } = useContext(MovieContext);
+  const location = useLocation();
 
   useEffect(() => {
-    dispatch(filterMovies(genre));
-  }, [genre]);
+    MENU_LEFT.map((genre) => {
+      location.pathname === `${url}/${genre}` && dispatch(filterMovies(genre));
+    });
+  }, [location]);
 
-  const leftMenuList = MENU_LEFT.map((item, i) => {
+  const leftMenuList = MENU_LEFT.map((genre) => {
     return (
       <Tab
         onClick={() => {
-          item === 'ALL' ? push(`${url}`) : push(`${url}/${item}`);
+          genre === 'ALL' ? push(`${url}`) : push(`${url}/${genre}`);
         }}
-        key={i}
+        key={genre}
       >
-        {item}
+        {genre}
       </Tab>
     );
   });

@@ -17,7 +17,7 @@ const Header: FC = () => {
     >
       <Top />
       <Switch>
-        <Route path={[`${path}/movie/:id`, `${path}/:genre/movie/:id`]}>
+        <Route exact path={[`${path}/:genre/movie/:id`, `${path}/movie/:id`]}>
           <MovieView />
         </Route>
         <Route path={`${path}`}>

@@ -10,8 +10,6 @@ export interface MoviesContext {
   isMovieView: boolean;
   movie: MovieType;
   error: string | null;
-  genre: string;
-  setGenre: React.Dispatch<React.SetStateAction<string>>;
   initialTabIndex: number;
   setInitialTabIndex: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -23,7 +21,6 @@ type Props = {
 export const MovieContext = createContext<MoviesContext>({} as MoviesContext);
 
 export const MoviesProvider: FC<Props> = ({ children }: Props) => {
-  const [genre, setGenre] = useState('');
   const [initialTabIndex, setInitialTabIndex] = useState(0);
   const { toggle, isToggled } = useToggle();
   const movieData = useSelector((state: DefaultState) => state.movie);
@@ -35,8 +32,6 @@ export const MoviesProvider: FC<Props> = ({ children }: Props) => {
         toggleHeaderView: toggle,
         movie: movieData.data,
         error: movieData.error,
-        genre,
-        setGenre,
         initialTabIndex,
         setInitialTabIndex
       }}
