@@ -7,6 +7,7 @@ import ErrorBoundary from './ErrorBoubary';
 import { MoviesProvider } from './contexts/MovieContext';
 import { theme } from './lib/theme';
 import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { store } from './state';
 
 const app = (
@@ -14,11 +15,13 @@ const app = (
     <ChakraProvider theme={theme}>
       <GlobalStyles />
       <ErrorBoundary>
-        <Provider store={store}>
-          <MoviesProvider>
-            <App />
-          </MoviesProvider>
-        </Provider>
+        <Router>
+          <Provider store={store}>
+            <MoviesProvider>
+              <App />
+            </MoviesProvider>
+          </Provider>
+        </Router>
       </ErrorBoundary>
     </ChakraProvider>
   </React.StrictMode>

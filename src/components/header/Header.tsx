@@ -1,22 +1,32 @@
-import React, { FC, ReactNode } from 'react';
+import React, { FC } from 'react';
 import tw from 'twin.macro';
 import img from '../../assets/images/header-image.jpg';
 import Top from './Top';
+import MovieView from '../movieView/MovieView';
+import Search from '../search/Search';
+import { Route, Switch, useRouteMatch } from 'react-router-dom';
 
-type Props = {
-  children: ReactNode;
+const Header: FC = () => {
+  const { path } = useRouteMatch();
+
+  return (
+    <HeaderContainer
+      style={{
+        backgroundImage: `url(${img})`
+      }}
+    >
+      <Top />
+      <Switch>
+        <Route exact path={[`${path}/:genre/movie/:id`, `${path}/movie/:id`]}>
+          <MovieView />
+        </Route>
+        <Route path={`${path}`}>
+          <Search />
+        </Route>
+      </Switch>
+    </HeaderContainer>
+  );
 };
-
-const Header: FC<Props> = ({ children }: Props) => (
-  <HeaderContainer
-    style={{
-      backgroundImage: `url(${img})`
-    }}
-  >
-    <Top />
-    {children}
-  </HeaderContainer>
-);
 
 export default Header;
 

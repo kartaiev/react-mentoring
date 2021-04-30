@@ -14,7 +14,7 @@ export const filterAllMovies = (genre: string): AxiosRequestConfig => ({
   url: `http://localhost:4000/movies?sortBy=title&filter=${genre}&offset=1&limit=12`
 });
 
-export const getSingleMovie = (id: number): AxiosRequestConfig => ({
+export const getSingleMovie = (id: string): AxiosRequestConfig => ({
   method: 'GET',
   url: `http://localhost:4000/movies/${id}`
 });

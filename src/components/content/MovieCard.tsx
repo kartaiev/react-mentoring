@@ -1,10 +1,8 @@
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import { AspectRatio } from '@chakra-ui/react';
 import tw from 'twin.macro';
 import DottedButtonPopup from './DottedButtonPopup';
-import { MovieContext } from '../../contexts/MovieContext';
-import { useDispatch } from 'react-redux';
-import { getMovie } from '../../state/actions';
 import { MovieType } from '../../state/interfaces';
 
 type Props = {
@@ -24,14 +22,11 @@ const MovieCard: FC<Props> = ({
   ID,
   movie
 }: Props) => {
-  const dispatch = useDispatch();
-
-  const { isMovieView, toggleHeaderView } = useContext(MovieContext);
+  const { push } = useHistory();
+  const match = useRouteMatch('/movies' || '/movies/:genre');
 
   const onClick = () => {
-    dispatch(getMovie(movie));
-
-    !isMovieView && toggleHeaderView();
+    push(`${match?.url}/movie/${movie.id}`);
     window.scrollTo(0, 0);
   };
 
